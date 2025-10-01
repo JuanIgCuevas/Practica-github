@@ -16,28 +16,28 @@ Landing page estática "Comidas del fin del mundo" con Bootstrap. Este repo incl
 ## Estructura del proyecto
 
 ```
-index.html
-assets/
-	css/
-		estilos.css
-	img/
-		bg-hero.jpg
-		card-1.jpg
-		card-2.jpg
-		card-3.jpg
-		logo.png
+src/
+  index.html
+  assets/
+    css/
+      estilos.css
+    img/
+      ...
 .vscode/
-	tasks.json
+  tasks.json
+.github/
+  workflows/
+    deploy-pages.yml
 ```
 
 ## Cómo correr el proyecto (sin Live Server)
 
 Opción A — abrir el archivo directamente:
 
-- Doble clic a `index.html` o desde PowerShell:
+- Doble clic a `src/index.html` o desde PowerShell:
 
 ```powershell
-start .\index.html
+start .\src\index.html
 ```
 
 Opción B — servidor local con Python (recomendado):
@@ -46,7 +46,7 @@ Opción B — servidor local con Python (recomendado):
 2) Ejecuta:
 
 ```powershell
-py -m http.server 5500
+py -m http.server 5500 --directory src
 ```
 
 3) Visita: http://localhost:5500/
@@ -55,12 +55,12 @@ py -m http.server 5500
 - Si el puerto 5500 está en uso, prueba otro (por ejemplo, 5501):
 
 ```powershell
-py -m http.server 5501
+py -m http.server 5501 --directory src
 ```
 
 Opción C — usando la tarea de VS Code (ya incluida):
 
-- Menú Terminal > Run Task… > "Start Python HTTP server (5500)".
+- Menú Terminal > Run Task… > "Start Python HTTP server (5500)". La tarea ya está configurada para servir desde `src`.
 - Para detenerla: Terminal > Terminate Task.
 
 ## Notas
@@ -91,5 +91,5 @@ Sugerencias:
 - Si configuras un dominio personalizado, agrega un archivo `CNAME` en la raíz con tu dominio.
 
 Notas del flujo:
-- El workflow sube todo el contenido del repo (raíz) tal cual a Pages.
+- El workflow sube el contenido de la carpeta `src` tal cual a Pages.
 - Mantén rutas relativas para que funcione bajo `/Practica-github/`.

@@ -8,12 +8,17 @@
 			"args": [
 				"-m",
 				"http.server",
-				"5500"
+				"5500",
+				"--directory",
+				"src"
 			],
 			"isBackground": true,
 			"problemMatcher": [
 				"$msCompile"
 			],
+			"options": {
+				"cwd": "${workspaceFolder}/src"
+			},
 			"group": "build"
 		}
 	]
