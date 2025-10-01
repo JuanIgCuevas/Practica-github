@@ -1,6 +1,6 @@
 # Practica-github (fdsw-github)
 
-Landing page estática "Comidas del fin del mundo" con Bootstrap. Este repo incluye un servidor local simple con Python para visualizar el sitio sin extensiones adicionales.
+Portafolio personal de Juan Ignacio Cuevas. Sitio estático con Bootstrap, servido localmente con Python y desplegado automáticamente en GitHub Pages.
 
 ## Tecnologías usadas hasta el momento
 
