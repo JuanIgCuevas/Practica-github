@@ -1,63 +1,9 @@
 // main.js: interacciones y mejoras UX
 (function () {
   const root = document.documentElement;
-  const themeToggle = document.getElementById('themeToggle');
   const backToTop = document.getElementById('backToTop');
-  const metaTheme = document.querySelector('meta[name="theme-color"]');
-  const nav = document.querySelector('nav.navbar');
-
-  // Tema: persistencia en localStorage
-  const THEME_KEY = 'theme';
-  const saved = localStorage.getItem(THEME_KEY);
-  if (saved === 'dark') {
-    root.classList.add('theme-dark');
-  }
-
-  function applyThemeState() {
-    const isDark = root.classList.contains('theme-dark');
-    // Toggle icon
-    if (themeToggle) {
-      const icon = themeToggle.querySelector('i');
-      if (icon) {
-        icon.classList.toggle('fa-moon', !isDark);
-        icon.classList.toggle('fa-sun', isDark);
-      }
-      // Toggle button style for contrast
-      themeToggle.classList.toggle('btn-outline-light', isDark);
-      themeToggle.classList.toggle('btn-outline-dark', !isDark);
-    }
-    // Update meta theme-color
-    if (metaTheme) metaTheme.setAttribute('content', isDark ? '#0f0f10' : '#f2f4f8');
-    // Navbar contrast: keep dark background to ensure readability
-    if (nav) {
-      if (isDark) {
-        nav.classList.remove('navbar-light','bg-light');
-        nav.classList.add('navbar-dark','bg-dark');
-      } else {
-        nav.classList.remove('navbar-dark','bg-dark');
-        nav.classList.add('navbar-light','bg-light');
-      }
-    }
-  }
-
-  function setTheme(dark) {
-    if (dark) {
-      root.classList.add('theme-dark');
-      localStorage.setItem(THEME_KEY, 'dark');
-    } else {
-      root.classList.remove('theme-dark');
-      localStorage.setItem(THEME_KEY, 'light');
-    }
-    applyThemeState();
-  }
-
-  if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-      const isDark = root.classList.toggle('theme-dark');
-      localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light');
-      applyThemeState();
-    });
-  }
+  const footer = document.querySelector('footer.site-footer');
+  // Nota: Se removió la funcionalidad de modo oscuro y su botón.
 
   // Back to top
   function onScroll() {
@@ -65,9 +11,24 @@
     const y = window.scrollY || document.documentElement.scrollTop;
     if (y > 250) backToTop.classList.add('show');
     else backToTop.classList.remove('show');
+
+    // Mantener el botón por encima del footer cuando éste es visible
+    if (footer) {
+      const rect = footer.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const overlap = Math.max(0, vh - rect.top); // cuánto entra el footer en viewport
+      if (overlap > 0) {
+        backToTop.classList.add('above-footer');
+        backToTop.style.setProperty('--footer-height', `${Math.min(overlap, rect.height)}px`);
+      } else {
+        backToTop.classList.remove('above-footer');
+        backToTop.style.removeProperty('--footer-height');
+      }
+    }
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
   if (backToTop) {
     backToTop.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -116,7 +77,6 @@
 
   // Inicializar AOS si está disponible
   window.addEventListener('load', () => {
-    applyThemeState();
     if (window.AOS) {
       window.AOS.init({
         once: true,

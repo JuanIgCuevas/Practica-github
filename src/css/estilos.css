@@ -99,8 +99,9 @@ body {
 /* Back to top */
 .back-to-top {
   position: fixed;
-  right: 16px;
-  bottom: 16px;
+  left: 36px; /* no tan pegada al borde izquierdo */
+  bottom: 24px;
+  --footer-height: 0px; /* se actualiza desde JS */
   border-radius: 999px;
   width: 44px;
   height: 44px;
@@ -108,9 +109,13 @@ body {
   align-items: center;
   justify-content: center;
   box-shadow: 0 10px 24px var(--shadow);
+  z-index: 1030;
 }
 
 .back-to-top.show { display: inline-flex; }
 
-/* Footer themed override */
-.site-footer { background-color: var(--surface) !important; color: var(--text) !important; }
+/* Cuando el footer es visible, levantamos el botón por encima de la franja */
+.back-to-top.above-footer { bottom: calc(24px + var(--footer-height)); }
+
+/* Footer: dark background with white text for better contrast */
+.site-footer { background-color: #212529 !important; color: #ffffff !important; }
