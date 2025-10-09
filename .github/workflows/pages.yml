@@ -1,0 +1,19 @@
+name: (disabled) Deploy to GitHub Pages - old
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  noop:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Workflow deshabilitado. Usar deploy-pages.yml"
